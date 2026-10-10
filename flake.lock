@@ -1,0 +1,161 @@
+{
+  "nodes": {
+    "colors": {
+      "locked": {
+        "lastModified": 1787827599,
+        "narHash": "sha256-O6crTjXQO7Gavtfm3ncG8OvsEvk9n3YpwTEF8X7id1A=",
+        "owner": "Very-Blank",
+        "repo": "colors",
+        "rev": "a43fc260ee5d8f76c36e6032a68862cba49c64a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Very-Blank",
+        "repo": "colors",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777699697,
+        "narHash": "sha256-Eg9b/rq/ECYwNwEXs5i9wHyhxNI0JrYx2srdI2uZMaQ=",
+        "ref": "refs/heads/main",
+        "rev": "382052b74656a369c5408822af3f2501e9b1af81",
+        "revCount": 94,
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/flake-compat.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/flake-compat.git"
+      }
+    },
+    "mnw": {
+      "locked": {
+        "lastModified": 1784154424,
+        "narHash": "sha256-HRn4O1X2ShYtbq5Egji72/aemyc2cIQicjRZD9hBqM8=",
+        "owner": "Gerg-L",
+        "repo": "mnw",
+        "rev": "0151d9fa87992cbeb67c86616fb9170dcec830b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gerg-L",
+        "repo": "mnw",
+        "type": "github"
+      }
+    },
+    "nixnvim": {
+      "inputs": {
+        "colors": "colors",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nvf": "nvf"
+      },
+      "locked": {
+        "lastModified": 1791658732,
+        "narHash": "sha256-q1dlAxgyd6ja/0H898w6DwDqSVVhIPehVn4qQqLQrQY=",
+        "owner": "Very-Blank",
+        "repo": "NixNvim",
+        "rev": "3dfea5333ddcf721c99358cb91877a2fd8e14ebd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Very-Blank",
+        "repo": "NixNvim",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791456040,
+        "narHash": "sha256-H83yz/do+hjOO0uujHyH8RgtIQP2v7Mw+cLwcZK/xKc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nmux": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781445002,
+        "narHash": "sha256-lS6zqsCZYRFa2Zqjhx2Ib4LIEGCTWB4TNMkgyVUKl5Y=",
+        "owner": "Very-Blank",
+        "repo": "Nmux",
+        "rev": "cb14e1d4a0c77836f053f7a12c56acbad3f5c881",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Very-Blank",
+        "repo": "Nmux",
+        "type": "github"
+      }
+    },
+    "nvf": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "mnw": "mnw",
+        "nixpkgs": [
+          "nixnvim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791602170,
+        "narHash": "sha256-lKqmYifuU1gWhtmcgalvsk62zitc71fPX6wx9f6VX24=",
+        "owner": "NotAShelf",
+        "repo": "nvf",
+        "rev": "9723961413fcd7268f73e27c0277a6da307bbce7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NotAShelf",
+        "repo": "nvf",
+        "type": "github"
+      }
+    },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791448974,
+        "narHash": "sha256-lPbqsyAD5ZoGFMZ1eqAlTULfeP5Nwhy+XvOowF7BE+E=",
+        "ref": "refs/heads/master",
+        "rev": "4f508be500dea6e5732cc3d50382a0048b17e7b1",
+        "revCount": 868,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixnvim": "nixnvim",
+        "nixpkgs": "nixpkgs",
+        "nmux": "nmux",
+        "quickshell": "quickshell"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
