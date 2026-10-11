@@ -30,8 +30,7 @@ Rectangle {
                 Image {
                     anchors.fill: parent
                     source: item.modelData.icon
-                    // Makes the icons little blurry, but looks better.
-                    sourceSize: Qt.size(width / 2, height / 2)
+                    sourceSize: Qt.size(width, height)
                     antialiasing: true
                 }
 

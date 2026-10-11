@@ -29,7 +29,7 @@ Scope {
                     left: parent.left
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 8
+                    margins: 4
                 }
 
                 spacing: 8
@@ -64,6 +64,11 @@ Scope {
                 }
 
                 spacing: 8
+
+                Capslock {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
 
                 Resources {
                     Layout.alignment: Qt.AlignVCenter

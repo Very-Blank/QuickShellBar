@@ -41,7 +41,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignVCenter
                 text: root.cpuUsage + "%"
 
-                color: root.cpuUsage <= 40 ? Config.palette.success : root.cpuUsage <= 80 ? Config.palette.warning : Config.palette.error
+                color: root.cpuUsage <= 40 ? Config.palette.foreground : root.cpuUsage <= 80 ? Config.palette.warning : Config.palette.error
 
                 font {
                     family: Config.fonts.mono
@@ -73,7 +73,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignVCenter
                 text: root.memoryUsage + "%"
 
-                color: root.memoryUsage <= 40 ? Config.palette.success : root.memoryUsage <= 80 ? Config.palette.warning : Config.palette.error
+                color: root.memoryUsage <= 40 ? Config.palette.foreground : root.memoryUsage <= 80 ? Config.palette.warning : Config.palette.error
 
                 font {
                     family: Config.fonts.mono
