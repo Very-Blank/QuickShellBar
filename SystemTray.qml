@@ -4,12 +4,11 @@ import Quickshell.Services.SystemTray
 
 Rectangle {
     id: root
-    Layout.alignment: Qt.AlignVCenter
-    implicitHeight: layout.implicitHeight + 10
-    implicitWidth: layout.implicitWidth + 10
+    implicitHeight: layout.implicitHeight
+    implicitWidth: layout.implicitWidth + Config.padding.width
     radius: 3.5
 
-    color: "dimgray"
+    color: Config.palette.surface
 
     RowLayout {
         id: layout
@@ -25,13 +24,15 @@ Rectangle {
 
                 Layout.alignment: Qt.AlignVCenter
 
-                implicitWidth: 20
                 implicitHeight: 20
+                implicitWidth: 20
 
                 Image {
                     anchors.fill: parent
                     source: item.modelData.icon
-                    sourceSize: Qt.size(width, height)
+                    // Makes the icons little blurry, but looks better.
+                    sourceSize: Qt.size(width / 2, height / 2)
+                    antialiasing: true
                 }
 
                 MouseArea {

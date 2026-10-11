@@ -18,32 +18,62 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 30
+            implicitHeight: Math.max(layoutLeft.implicitHeight, layoutMiddle.implicitHeight, layoutRight.implicitHeight) + Config.padding.height
 
-            color: "transparent"
+            color: Config.palette.background
 
             RowLayout {
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 8
+                id: layoutLeft
+
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    bottom: parent.bottom
+                    margins: 8
+                }
+
                 spacing: 8
             }
 
             RowLayout {
-                anchors.centerIn: parent
-                anchors.margins: 8
+                id: layoutMiddle
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: parent.top
+                    bottom: parent.bottom
+                    margins: 4
+                }
+
                 spacing: 8
-                Clock {}
+
+                Clock {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
             }
 
             RowLayout {
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 8
+                id: layoutRight
+
+                anchors {
+                    right: parent.right
+                    top: parent.top
+                    bottom: parent.bottom
+                    margins: 4
+                }
+
                 spacing: 8
 
-                Resources {}
-                SystemTray {}
+                Resources {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
+
+                SystemTray {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
             }
         }
     }

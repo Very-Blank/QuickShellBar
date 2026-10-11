@@ -1,78 +1,133 @@
 import Quickshell.Io
-import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
+import QtQuick
 
 Rectangle {
     id: root
-    Layout.alignment: Qt.AlignVCenter
-    implicitHeight: text.implicitHeight + 10
-    implicitWidth: text.implicitWidth + 10
+    implicitHeight: layout.implicitHeight
+    implicitWidth: layout.implicitWidth + Config.padding.width
     radius: 3.5
 
-    color: "dimgray"
+    color: Config.palette.surface
 
     property int memoryUsage
     property int cpuUsage
 
-    Text {
-        id: text
-        text: "CPU: " + root.cpuUsage + "% " + "MEM: " + root.memoryUsage + "%"
+    RowLayout {
+        id: layout
         anchors.centerIn: parent
+        spacing: 8
 
-        color: "gainsboro"
-    }
+        RowLayout {
+            Layout.alignment: Qt.AlignVCenter
 
-    Process {
-        id: memoryProcess
-        command: ["sh", "-c", "free | grep Mem"]
-        running: true
+            Image {
+                id: cpuIcon
+                Layout.alignment: Qt.AlignVCenter
+                source: Qt.resolvedUrl("icons/cpu.svg")
+                sourceSize: Qt.size(16, 16)
 
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data)
-                    return;
+                layer {
+                    enabled: true
+                    effect: MultiEffect {
+                        brightness: 1.0
+                    }
+                }
+            }
 
-                var parts = data.trim().split(/\s+/);
-                var total = parseInt(parts[1]) || 1;
-                var used = parseInt(parts[2]) || 0;
+            Text {
+                id: cpuText
+                Layout.alignment: Qt.AlignVCenter
+                text: root.cpuUsage + "%"
 
-                root.memoryUsage = Math.round(100 * used / total);
+                color: root.cpuUsage <= 40 ? Config.palette.success : root.cpuUsage <= 80 ? Config.palette.warning : Config.palette.error
+
+                font {
+                    family: Config.fonts.mono
+                    pixelSize: Config.fonts.normal
+                    bold: true
+                }
+            }
+        }
+
+        RowLayout {
+            Layout.alignment: Qt.AlignVCenter
+
+            Image {
+                id: memIcon
+                Layout.alignment: Qt.AlignVCenter
+                source: Qt.resolvedUrl("icons/ram.svg")
+                sourceSize: Qt.size(16, 16)
+
+                layer {
+                    enabled: true
+                    effect: MultiEffect {
+                        brightness: 1.0
+                    }
+                }
+            }
+
+            Text {
+                id: memText
+                Layout.alignment: Qt.AlignVCenter
+                text: root.memoryUsage + "%"
+
+                color: root.memoryUsage <= 40 ? Config.palette.success : root.memoryUsage <= 80 ? Config.palette.warning : Config.palette.error
+
+                font {
+                    family: Config.fonts.mono
+                    pixelSize: Config.fonts.normal
+                    bold: true
+                }
             }
         }
     }
 
-    Process {
-        id: cpuProcess
-        command: ["sh", "-c", "head -1 /proc/stat"]
-        running: true
+    FileView {
+        id: memInfo
+        path: "/proc/meminfo"
 
-        stdout: SplitParser {
-            property int lastCpuTotal
-            property int lastCpuIdle
-            onRead: data => {
-                if (!data)
-                    return;
-                var p = data.trim().split(/\s+/);
-                var idle = parseInt(p[4]) + parseInt(p[5]);
-                var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0);
+        onLoaded: {
+            const m = text().match(/^MemTotal:\s+(\d+)[\s\S]*?^MemAvailable:\s+(\d+)/m);
+            if (!m)
+                return;
 
-                if (lastCpuTotal > 0) {
-                    root.cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)));
-                }
+            const total = parseInt(m[1]);
+            const avail = parseInt(m[2]);
+            if (total > 0)
+                root.memoryUsage = Math.round(100 * (total - avail) / total);
+        }
+    }
 
-                lastCpuTotal = total;
-                lastCpuIdle = idle;
-            }
+    FileView {
+        id: cpuStatus
+        path: "/proc/stat"
+
+        property real lastTotal: 0
+        property real lastIdle: 0
+
+        onLoaded: {
+            const line = text().split("\n")[0];
+            const p = line.trim().split(/\s+/);
+            const idle = parseInt(p[4]) + parseInt(p[5]);
+            const total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0);
+
+            if (lastTotal > 0)
+                root.cpuUsage = Math.round(100 * (1 - (idle - lastIdle) / (total - lastTotal)));
+
+            lastTotal = total;
+            lastIdle = idle;
         }
     }
 
     Timer {
-        interval: 1000
+        interval: 2000
         running: true
         repeat: true
         onTriggered: {
-            cpuProcess.running = true;
-            memoryProcess.running = true;
+            cpuStatus.reload();
+            memInfo.reload();
         }
     }
 }

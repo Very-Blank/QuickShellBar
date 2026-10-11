@@ -1,21 +1,76 @@
 import Quickshell
-import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
+import QtQuick
 
 Rectangle {
-    Layout.alignment: Qt.AlignVCenter
-    implicitHeight: text.implicitHeight + 10
-    implicitWidth: text.implicitWidth + 10
+    implicitHeight: layout.implicitHeight
+    implicitWidth: layout.implicitWidth + Config.padding.width
     radius: 3.5
 
-    color: "dimgray"
+    color: Config.palette.surface
 
-    Text {
-        id: text
+    RowLayout {
+        id: layout
         anchors.centerIn: parent
-        text: Qt.formatDateTime(clock.date, "ddd MMM d hh:mm:ss AP")
 
-        color: "gainsboro"
+        RowLayout {
+            Image {
+                Layout.alignment: Qt.AlignVCenter
+                source: Qt.resolvedUrl("icons/calendar.svg")
+                sourceSize: Qt.size(16, 16)
+
+                layer {
+                    enabled: true
+                    effect: MultiEffect {
+                        brightness: 1.0
+                    }
+                }
+            }
+
+            Text {
+                Layout.alignment: Qt.AlignVCenter
+
+                text: Qt.formatDateTime(clock.date, "ddd MMM d")
+
+                color: Config.palette.foreground
+
+                font {
+                    family: Config.fonts.mono
+                    pixelSize: Config.fonts.normal
+                    bold: true
+                }
+            }
+        }
+
+        RowLayout {
+            Image {
+                Layout.alignment: Qt.AlignVCenter
+                source: Qt.resolvedUrl("icons/clock.svg")
+                sourceSize: Qt.size(16, 16)
+
+                layer {
+                    enabled: true
+                    effect: MultiEffect {
+                        brightness: 1.0
+                    }
+                }
+            }
+
+            Text {
+                Layout.alignment: Qt.AlignVCenter
+
+                text: Qt.formatDateTime(clock.date, "hh:mm")
+
+                color: Config.palette.foreground
+
+                font {
+                    family: Config.fonts.mono
+                    pixelSize: Config.fonts.normal
+                    bold: true
+                }
+            }
+        }
     }
 
     SystemClock {

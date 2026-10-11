@@ -33,15 +33,29 @@
             shell = pkgs.lib.getExe pkgs.zsh;
 
             extraConfig = ''
-              set-hook -g session-created 'send-keys "nvim" enter ; new-window ; send-keys "qs --path Bar.qml" enter; select-window -t 0'
+              set-hook -g session-created 'send-keys "nvim" enter ; new-window ; send-keys "quickshell --path Bar.qml" enter; select-window -t 0'
             '';
           };
         };
       };
+
+      icons = {
+        package = pkgs.papirus-icon-theme;
+        theme = "Papirus";
+      };
+
+      quickshell = pkgs.symlinkJoin {
+        name = "ghostty";
+        paths = [inputs.quickshell.packages.${system}.default];
+        buildInputs = [pkgs.makeWrapper];
+        postBuild = ''
+          wrapProgram $out/bin/quickshell --set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/
+        '';
+      };
     in
       pkgs.mkShell {
         packages = [
-          inputs.quickshell.packages.${system}.default
+          quickshell
           (
             inputs.nixnvim.mkPackage {
               inherit system;
