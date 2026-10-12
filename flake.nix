@@ -55,6 +55,7 @@
     in
       pkgs.mkShell {
         packages = [
+          pkgs.upower
           quickshell
           (
             inputs.nixnvim.mkPackage {

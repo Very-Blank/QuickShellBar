@@ -18,7 +18,7 @@ Scope {
                 right: true
             }
 
-            implicitHeight: Math.max(layoutLeft.implicitHeight, layoutMiddle.implicitHeight, layoutRight.implicitHeight) + Config.padding.height
+            implicitHeight: Math.max(layoutLeft.implicitHeight, layoutMiddle.implicitHeight, layoutRight.implicitHeight) + Config.styling.height
 
             color: Config.palette.background
 
@@ -66,6 +66,11 @@ Scope {
                 spacing: 8
 
                 Capslock {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
+
+                Battery {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillHeight: true
                 }

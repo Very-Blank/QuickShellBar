@@ -5,8 +5,8 @@ import QtQuick
 
 Rectangle {
     implicitHeight: layout.implicitHeight
-    implicitWidth: layout.implicitWidth + Config.padding.width
-    radius: 3.5
+    implicitWidth: layout.implicitWidth + Config.styling.width
+    radius: Config.styling.radius
 
     color: Config.palette.surface
 

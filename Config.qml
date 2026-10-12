@@ -35,9 +35,10 @@ Singleton {
         property int icon
     }
 
-    component Padding: QtObject {
+    component Styling: QtObject {
         property int height
         property int width
+        property real radius
     }
 
     readonly property Palette palette: Palette {
@@ -66,8 +67,9 @@ Singleton {
         icon: 16
     }
 
-    readonly property Padding padding: Padding {
+    readonly property Styling styling: Styling {
         height: 15
-        width: 15
+        width: 18
+        radius: 10
     }
 }
