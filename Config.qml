@@ -43,8 +43,8 @@ Singleton {
 
     readonly property Palette palette: Palette {
         background: "#16161E"       // base00
-        surface: "#1A1B26"          // base01
-        surfaceHigh: "#2F3549"      // base02
+        surface: "#2F3549"          // base02
+        surfaceHigh: "#444B6A"      // base03
 
         foreground: "#CBCCD1"       // base06
         foregroundMuted: "#787C99"  // base04
@@ -69,7 +69,7 @@ Singleton {
 
     readonly property Styling styling: Styling {
         height: 15
-        width: 18
+        width: 22
         radius: 10
     }
 }

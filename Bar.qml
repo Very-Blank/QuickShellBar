@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Io
 import QtQuick.Layouts
 import QtQuick
 
@@ -30,6 +31,11 @@ Scope {
                     top: parent.top
                     bottom: parent.bottom
                     margins: 4
+                }
+
+                Niri {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
                 }
 
                 spacing: 8
@@ -70,12 +76,12 @@ Scope {
                     Layout.fillHeight: true
                 }
 
-                Battery {
+                Resources {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillHeight: true
                 }
 
-                Resources {
+                Battery {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillHeight: true
                 }

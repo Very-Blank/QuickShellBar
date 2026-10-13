@@ -24,13 +24,12 @@ Rectangle {
             implicitHeight: 10
             implicitWidth: 40
             enabled: false
-            value: 0.5
+            value: root.level
 
             handle: null
 
             background: Rectangle {
-                x: slider.leftPadding
-                y: slider.topPadding + slider.availableHeight / 2 - height / 2
+                anchors.centerIn: parent
                 implicitWidth: 200
                 implicitHeight: 8
                 width: slider.availableWidth
@@ -41,7 +40,7 @@ Rectangle {
                 Rectangle {
                     width: slider.visualPosition * parent.width
                     height: parent.height
-                    color: Config.palette.success
+                    color: root.level <= 0.15 ? Config.palette.error : root.level <= 0.30 ? Config.palette.warning : Config.palette.success
                     radius: 2
                 }
             }
@@ -50,7 +49,7 @@ Rectangle {
         Text {
             Layout.alignment: Qt.AlignVCenter
 
-            text: (level) * 100 + "%"
+            text: Math.round(root.level * 100) + "%"
 
             color: Config.palette.foreground
 
