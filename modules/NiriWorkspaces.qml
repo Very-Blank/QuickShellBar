@@ -22,6 +22,8 @@ Rectangle {
             right: parent.right
         }
 
+        spacing: 0
+
         Repeater {
             model: NiriService.windows[window] !== undefined ? NiriService.windows[window].workspaces : []
 

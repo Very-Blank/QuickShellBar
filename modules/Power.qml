@@ -11,7 +11,7 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
         Layout.fillHeight: true
 
-        icon: "system-shutdown-symbolic"
+        icon: "../icons/poweroff.svg"
         onActivated: Quickshell.execDetached(["poweroff"])
     }
 
@@ -19,7 +19,7 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
         Layout.fillHeight: true
 
-        icon: "system-restart-symbolic"
+        icon: "../icons/restart.svg"
         onActivated: Quickshell.execDetached(["reboot"])
     }
 
@@ -27,7 +27,7 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
         Layout.fillHeight: true
 
-        icon: "system-hibernate-symbolic"
+        icon: "../icons/hibernate.svg"
         onActivated: Quickshell.execDetached(["systemctl", "hibernate"])
     }
 }

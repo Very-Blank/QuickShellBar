@@ -1,5 +1,6 @@
 import Quickshell.Services.Pipewire
 import QtQuick.Layouts
+import QtQuick.Effects
 import Quickshell
 import QtQuick
 
@@ -20,28 +21,40 @@ Rectangle {
         RowLayout {
             SImage {
                 Layout.alignment: Qt.AlignVCenter
-                source: Pipewire.defaultAudioSink.audio.muted ? Quickshell.iconPath("audio-volume-muted-blocking-symbolic") : Quickshell.iconPath("audio-symbolic")
-                sourceSize: Qt.size(11, 11)
+                source: Pipewire.defaultAudioSink.audio.muted ? Qt.resolvedUrl("../icons/volumeOff.svg") : Qt.resolvedUrl("../icons/volumeUp.svg")
+
+                layer {
+                    enabled: Pipewire.defaultAudioSink.audio.muted
+                    effect: MultiEffect {
+                        colorization: 1.0
+                        colorizationColor: Config.palette.error
+                    }
+                }
             }
 
             SText {
                 Layout.alignment: Qt.AlignVCenter
                 text: Math.round(100 * Pipewire.defaultAudioSink.audio.volume) + "%"
-                visible: !Pipewire.defaultAudioSink.audio.muted
             }
         }
 
         RowLayout {
             SImage {
                 Layout.alignment: Qt.AlignVCenter
-                source: Pipewire.defaultAudioSource.audio.muted ? Quickshell.iconPath("audio-input-microphone-muted-symbolic") : Quickshell.iconPath("audio-input-microphone-symbolic")
-                sourceSize: Qt.size(8, 8)
+                source: Pipewire.defaultAudioSource.audio.muted ? Qt.resolvedUrl("../icons/micOff.svg") : Qt.resolvedUrl("../icons/micOn.svg")
+
+                layer {
+                    enabled: Pipewire.defaultAudioSource.audio.muted
+                    effect: MultiEffect {
+                        colorization: 1.0
+                        colorizationColor: Config.palette.error
+                    }
+                }
             }
 
             SText {
                 Layout.alignment: Qt.AlignVCenter
                 text: Math.round(100 * Pipewire.defaultAudioSource.audio.volume) + "%"
-                visible: !Pipewire.defaultAudioSink.audio.muted
             }
         }
     }

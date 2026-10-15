@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 import qs
 
@@ -19,8 +18,7 @@ Rectangle {
         id: icon
         anchors.centerIn: parent
 
-        source: Quickshell.iconPath(root.icon)
-        sourceSize: Qt.size(8, 8)
+        source: Qt.resolvedUrl(root.icon)
     }
 
     MouseArea {

@@ -43,7 +43,7 @@ Rectangle {
                 Rectangle {
                     width: slider.visualPosition * parent.width
                     height: parent.height
-                    color: root.level <= 0.15 ? Config.palette.error : root.level <= 0.30 ? Config.palette.warning : Config.palette.success
+                    color: root.level <= 0.15 ? Config.palette.error : root.level <= 0.30 ? Config.palette.warning : Config.palette.foreground
                     radius: 2
                 }
             }
@@ -55,7 +55,6 @@ Rectangle {
         }
 
         SImage {
-            id: memIcon
             Layout.alignment: Qt.AlignVCenter
             source: Qt.resolvedUrl("../icons/charging.svg")
 

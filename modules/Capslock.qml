@@ -1,5 +1,4 @@
 import Quickshell.Io
-import QtQuick.Effects
 import QtQuick
 
 import qs.styled
