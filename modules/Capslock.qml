@@ -2,6 +2,9 @@ import Quickshell.Io
 import QtQuick.Effects
 import QtQuick
 
+import qs.styled
+import qs
+
 Rectangle {
     id: root
     implicitHeight: icon.implicitHeight
@@ -12,18 +15,10 @@ Rectangle {
 
     property bool capslock: false
 
-    Image {
+    SImage {
         id: icon
         anchors.centerIn: parent
-        source: root.capslock ? Qt.resolvedUrl("icons/lockOn.svg") : Qt.resolvedUrl("icons/lockOff.svg")
-        sourceSize: Qt.size(16, 16)
-
-        layer {
-            enabled: true
-            effect: MultiEffect {
-                brightness: 1.0
-            }
-        }
+        source: root.capslock ? Qt.resolvedUrl("../icons/lockOn.svg") : Qt.resolvedUrl("../icons/lockOff.svg")
     }
 
     Process {

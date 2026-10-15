@@ -3,6 +3,9 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick
 
+import qs.styled
+import qs
+
 Rectangle {
     id: root
     implicitHeight: layout.implicitHeight
@@ -46,18 +49,17 @@ Rectangle {
             }
         }
 
-        Text {
+        SText {
             Layout.alignment: Qt.AlignVCenter
-
             text: Math.round(root.level * 100) + "%"
+        }
 
-            color: Config.palette.foreground
+        SImage {
+            id: memIcon
+            Layout.alignment: Qt.AlignVCenter
+            source: Qt.resolvedUrl("../icons/charging.svg")
 
-            font {
-                family: Config.fonts.mono
-                pixelSize: Config.fonts.normal
-                bold: true
-            }
+            visible: UPower.displayDevice.state === UPowerDeviceState.Charging
         }
     }
 }

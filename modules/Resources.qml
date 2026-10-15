@@ -3,6 +3,9 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick
 
+import qs.styled
+import qs
+
 Rectangle {
     id: root
     implicitHeight: layout.implicitHeight
@@ -22,64 +25,36 @@ Rectangle {
         RowLayout {
             Layout.alignment: Qt.AlignVCenter
 
-            Image {
+            SImage {
                 id: cpuIcon
                 Layout.alignment: Qt.AlignVCenter
-                source: Qt.resolvedUrl("icons/cpu.svg")
-                sourceSize: Qt.size(16, 16)
-
-                layer {
-                    enabled: true
-                    effect: MultiEffect {
-                        brightness: 1.0
-                    }
-                }
+                source: Qt.resolvedUrl("../icons/cpu.svg")
             }
 
-            Text {
+            SText {
                 id: cpuText
                 Layout.alignment: Qt.AlignVCenter
                 text: root.cpuUsage + "%"
 
                 color: root.cpuUsage <= 40 ? Config.palette.foreground : root.cpuUsage <= 80 ? Config.palette.warning : Config.palette.error
-
-                font {
-                    family: Config.fonts.mono
-                    pixelSize: Config.fonts.normal
-                    bold: true
-                }
             }
         }
 
         RowLayout {
             Layout.alignment: Qt.AlignVCenter
 
-            Image {
+            SImage {
                 id: memIcon
                 Layout.alignment: Qt.AlignVCenter
-                source: Qt.resolvedUrl("icons/ram.svg")
-                sourceSize: Qt.size(16, 16)
-
-                layer {
-                    enabled: true
-                    effect: MultiEffect {
-                        brightness: 1.0
-                    }
-                }
+                source: Qt.resolvedUrl("../icons/ram.svg")
             }
 
-            Text {
+            SText {
                 id: memText
                 Layout.alignment: Qt.AlignVCenter
                 text: root.memoryUsage + "%"
 
                 color: root.memoryUsage <= 40 ? Config.palette.foreground : root.memoryUsage <= 80 ? Config.palette.warning : Config.palette.error
-
-                font {
-                    family: Config.fonts.mono
-                    pixelSize: Config.fonts.normal
-                    bold: true
-                }
             }
         }
     }

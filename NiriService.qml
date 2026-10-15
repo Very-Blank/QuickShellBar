@@ -8,7 +8,7 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    property int workspace
+    property var windows: ({})
 
     Socket {
         id: socket
@@ -25,7 +25,6 @@ Singleton {
         parser: SplitParser {
             onRead: line => {
                 try {
-                    print(line);
                     const event = JSON.parse(line);
                     socket.handleNiriEvent(event);
                 } catch (e) {
@@ -39,8 +38,58 @@ Singleton {
 
             switch (eventType) {
             case "WorkspaceActivated":
-                root.workspace = event["WorkspaceActivated"]["id"];
-                break;
+                {
+                    const id = event["WorkspaceActivated"]["id"];
+                    const windows = root.windows;
+
+                    outer: for (const output in windows) {
+                        for (const workspace of windows[output].workspaces) {
+                            if (workspace.id === id) {
+                                windows[output].active = workspace.index;
+                                break outer;
+                            }
+                        }
+                    }
+
+                    root.windows = Object.assign({}, windows);
+                    break;
+                }
+            case "WorkspacesChanged":
+                {
+                    const windows = {};
+
+                    for (const workspace of event["WorkspacesChanged"]["workspaces"]) {
+                        if (windows[workspace.output] === undefined) {
+                            windows[workspace.output] = {
+                                workspaces: [
+                                    {
+                                        id: workspace.id,
+                                        index: workspace.idx
+                                    }
+                                ],
+                                active: workspace.is_active ? workspace.idx : 0
+                            };
+
+                            continue;
+                        }
+
+                        windows[workspace.output].workspaces.push({
+                            id: workspace.id,
+                            index: workspace.idx
+                        });
+
+                        if (workspace.is_active) {
+                            windows[workspace.output].active = workspace.idx;
+                        }
+                    }
+
+                    for (const output in windows) {
+                        windows[output].workspaces.sort((a, b) => a.index - b.index);
+                    }
+
+                    root.windows = windows;
+                    break;
+                }
             }
         }
     }
