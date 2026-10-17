@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 
@@ -7,7 +9,7 @@ Rectangle {
     id: root
     implicitHeight: layout.implicitHeight
     implicitWidth: layout.implicitWidth
-    radius: Config.styling.radius
+    radius: Config.modules.radius
 
     color: Config.palette.surface
 
@@ -25,30 +27,41 @@ Rectangle {
         spacing: 0
 
         Repeater {
-            model: NiriService.windows[window] !== undefined ? NiriService.windows[window].workspaces : []
+            model: NiriService.windows[root.window] !== undefined ? NiriService.windows[root.window].workspaces : []
 
             Rectangle {
+                id: workspace
+
                 required property var modelData
-                readonly property bool active: NiriService.windows[window].active === modelData.index
+                readonly property bool active: NiriService.windows[root.window].active === modelData.index
 
                 Layout.fillHeight: true
 
                 implicitHeight: text.implicitHeight
-                implicitWidth: text.implicitWidth + Config.styling.width
-                radius: Config.styling.radius
+                implicitWidth: text.implicitWidth + Config.modules.extraWidth
+                radius: Config.modules.radius
                 color: active ? Config.palette.surfaceHigh : Config.palette.surface
 
                 Text {
                     id: text
                     anchors.centerIn: parent
-                    text: modelData.index
+                    text: workspace.modelData.index
 
-                    color: active ? Config.palette.foreground : Config.palette.foregroundMuted
+                    color: workspace.active ? Config.palette.foreground : Config.palette.foregroundMuted
 
                     font {
                         family: Config.fonts.mono
                         pixelSize: Config.fonts.normal
                         bold: true
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+
+                    onClicked: () => {
+                        NiriService.switchToWorkspace(workspace.modelData.id);
                     }
                 }
             }

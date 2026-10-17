@@ -10,8 +10,34 @@ Singleton {
 
     property var windows: ({})
 
+    function switchToWorkspace(id) {
+        if (actionSocket.connected) {
+            actionSocket.write(JSON.stringify({
+                "Action": {
+                    "FocusWorkspace": {
+                        "reference": {
+                            "Id": id
+                        }
+                    }
+                }
+            }) + "\n");
+
+            actionSocket.flush();
+
+            return true;
+        }
+
+        return false;
+    }
+
     Socket {
-        id: socket
+        id: actionSocket
+        path: Quickshell.env("NIRI_SOCKET")
+        connected: true
+    }
+
+    Socket {
+        id: eventSocket
         path: Quickshell.env("NIRI_SOCKET")
         connected: true
 
@@ -26,7 +52,7 @@ Singleton {
             onRead: line => {
                 try {
                     const event = JSON.parse(line);
-                    socket.handleNiriEvent(event);
+                    eventSocket.handleNiriEvent(event);
                 } catch (e) {
                     print("Failed to parse event:", line, e);
                 }

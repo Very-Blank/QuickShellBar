@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.SystemTray
@@ -7,8 +9,8 @@ import qs
 Rectangle {
     id: root
     implicitHeight: layout.implicitHeight
-    implicitWidth: layout.implicitWidth + Config.styling.width
-    radius: Config.styling.radius
+    implicitWidth: layout.implicitWidth + Config.modules.extraWidth
+    radius: Config.modules.radius
 
     color: Config.palette.surface
 

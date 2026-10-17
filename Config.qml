@@ -35,10 +35,16 @@ Singleton {
         property int icon
     }
 
-    component Styling: QtObject {
-        property int height
-        property int width
+    component Modules: QtObject {
+        property int extraHeight
+        property int extraWidth
         property real radius
+    }
+
+    component Bar: QtObject {
+        property int extraHeight
+        property int spacing
+        property int margins
     }
 
     readonly property Palette palette: Palette {
@@ -59,7 +65,6 @@ Singleton {
 
     readonly property Fonts fonts: Fonts {
         mono: "JetBrainsMono Nerd Font Mono"
-        icons: "Symbols Nerd Font"
 
         small: 11
         normal: 13
@@ -67,9 +72,14 @@ Singleton {
         icon: 16
     }
 
-    readonly property Styling styling: Styling {
-        height: 15
-        width: 22
+    readonly property Modules modules: Modules {
+        extraWidth: 22
         radius: 10
+    }
+
+    readonly property Bar bar: Bar {
+        extraHeight: 15
+        spacing: 8
+        margins: 4
     }
 }

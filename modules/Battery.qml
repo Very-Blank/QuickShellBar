@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell.Services.UPower
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -9,8 +11,8 @@ import qs
 Rectangle {
     id: root
     implicitHeight: layout.implicitHeight
-    implicitWidth: layout.implicitWidth + Config.styling.width
-    radius: Config.styling.radius
+    implicitWidth: layout.implicitWidth + Config.modules.extraWidth
+    radius: Config.modules.radius
 
     color: Config.palette.surface
 
@@ -37,14 +39,14 @@ Rectangle {
                 implicitHeight: 8
                 width: slider.availableWidth
                 height: implicitHeight
-                radius: 2
+                radius: Config.modules.radius
                 color: Config.palette.surfaceHigh
 
                 Rectangle {
                     width: slider.visualPosition * parent.width
                     height: parent.height
                     color: root.level <= 0.15 ? Config.palette.error : root.level <= 0.30 ? Config.palette.warning : Config.palette.foreground
-                    radius: 2
+                    radius: Config.modules.radius
                 }
             }
         }

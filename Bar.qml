@@ -1,9 +1,10 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick.Layouts
 import QtQuick
 
 import qs.modules
-import qs.styled
 
 Scope {
     Variants {
@@ -21,19 +22,19 @@ Scope {
                 right: true
             }
 
-            implicitHeight: Math.max(layoutLeft.implicitHeight, layoutMiddle.implicitHeight, layoutRight.implicitHeight) + Config.styling.height
+            implicitHeight: Math.max(layoutLeft.implicitHeight, layoutMiddle.implicitHeight, layoutRight.implicitHeight) + Config.bar.extraHeight
 
             color: Config.palette.background
 
             RowLayout {
                 id: layoutLeft
-                spacing: 8
+                spacing: Config.bar.spacing
 
                 anchors {
                     left: parent.left
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 4
+                    margins: Config.bar.margins
                 }
 
                 NiriWorkspaces {
@@ -55,13 +56,13 @@ Scope {
 
             RowLayout {
                 id: layoutMiddle
-                spacing: 8
+                spacing: Config.bar.spacing
 
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 4
+                    margins: Config.bar.margins
                 }
 
                 Clock {
@@ -72,21 +73,26 @@ Scope {
 
             RowLayout {
                 id: layoutRight
-                spacing: 8
+                spacing: Config.bar.spacing
 
                 anchors {
                     right: parent.right
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 4
+                    margins: Config.bar.margins
                 }
 
-                Resources {
+                Audio {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillHeight: true
                 }
 
-                Audio {
+                Brightness {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+                }
+
+                Resources {
                     Layout.alignment: Qt.AlignVCenter
                     Layout.fillHeight: true
                 }

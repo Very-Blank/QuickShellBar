@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell.Io
 import QtQuick
 
@@ -7,8 +9,8 @@ import qs
 Rectangle {
     id: root
     implicitHeight: icon.implicitHeight
-    implicitWidth: icon.implicitWidth + Config.styling.width
-    radius: Config.styling.radius
+    implicitWidth: icon.implicitWidth + Config.modules.extraWidth
+    radius: Config.modules.radius
 
     color: Config.palette.surface
 
