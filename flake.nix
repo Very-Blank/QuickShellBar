@@ -47,6 +47,10 @@
             wrapProgram $out/bin/quickshell ${set} ${flags}
             wrapProgram $out/bin/qs ${set} ${flags}
           '';
+
+          meta = {
+            mainProgram = "quickshell";
+          };
         });
     });
   };
