@@ -51,7 +51,7 @@
           meta = {
             mainProgram = "quickshell";
           };
-        });
+        }) {};
     });
   };
 }
