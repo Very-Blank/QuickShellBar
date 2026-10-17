@@ -22,8 +22,8 @@ Rectangle {
         RowLayout {
             id: sink
 
-            readonly property int volume: Math.round(100 * Pipewire.defaultAudioSink.audio.volume)
-            readonly property bool muted: Pipewire.defaultAudioSink.audio.muted
+            readonly property int volume: Pipewire.defaultAudioSink !== null ? Math.round(100 * Pipewire.defaultAudioSink.audio.volume) : 0
+            readonly property bool muted: Pipewire.defaultAudioSink !== null ? Pipewire.defaultAudioSink.audio.muted : true
 
             SImage {
                 Layout.alignment: Qt.AlignVCenter
@@ -47,8 +47,8 @@ Rectangle {
         RowLayout {
             id: source
 
-            readonly property int volume: Math.round(100 * Pipewire.defaultAudioSource.audio.volume)
-            readonly property bool muted: Pipewire.defaultAudioSource.audio.muted
+            readonly property int volume: Pipewire.defaultAudioSource !== null ? Math.round(100 * Pipewire.defaultAudioSource.audio.volume) : 0
+            readonly property bool muted: Pipewire.defaultAudioSource !== null ? Pipewire.defaultAudioSource.audio.muted : true
 
             SImage {
                 Layout.alignment: Qt.AlignVCenter

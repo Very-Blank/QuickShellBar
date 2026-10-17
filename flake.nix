@@ -6,103 +6,48 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixnvim = {
-      url = "github:Very-Blank/NixNvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nmux = {
-      url = "github:Very-Blank/Nmux";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
-    system = "x86_64-linux";
+    forAllSystems = function:
+      nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ] (system: function system nixpkgs.legacyPackages.${system});
   in {
-    devShells."${system}".default = let
-      pkgs = import nixpkgs {inherit system;};
+    packages = forAllSystems (system: pkgs: let
+      lib = pkgs.lib;
 
-      tmux = inputs.nmux.mkPackage {
-        inherit system;
-
-        extraModule = {...}: {
-          config.nmux = {
-            name = "QuickShell";
-            shell = pkgs.lib.getExe pkgs.zsh;
-
-            extraConfig = ''
-              set-hook -g session-created 'send-keys "nvim" enter ; new-window ; send-keys "quickshell --path Bar.qml" enter; select-window -t 0'
-            '';
-          };
-        };
-      };
-
-      icons = {
-        package = pkgs.papirus-icon-theme;
-        theme = "Papirus";
-      };
-
-      quickshell = pkgs.symlinkJoin {
-        name = "ghostty";
-        paths = [inputs.quickshell.packages.${system}.default];
-        buildInputs = [pkgs.makeWrapper];
-        postBuild = ''
-          wrapProgram $out/bin/quickshell --set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/
-        '';
-      };
-    in
-      pkgs.mkShell {
-        packages = [
-          pkgs.upower
-          quickshell
-          (
-            inputs.nixnvim.mkPackage {
-              inherit system;
-
-              extraModule = {lib, ...}: {
-                config = {
-                  vim = {
-                    languages.qml = {
-                      enable = true;
-                      treesitter.enable = false;
-                      lsp.enable = true;
-                    };
-
-                    syntaxHighlighting = lib.mkForce false;
-
-                    treesitter.highlight.enable = lib.mkForce false;
-
-                    lsp.servers.qmlls = {
-                      init_options.provideFormatter = false;
-
-                      # drop semantic tokens so the LSP can't color the buffer
-                      on_attach = lib.generators.mkLuaInline ''
-                        function(client, bufnr)
-                          client.server_capabilities.semanticTokensProvider = nil
-                        end
-                      '';
-                    };
-
-                    local.indenting = [
-                      {
-                        tabstop = 4;
-                        shiftwidth = 4;
-                        expandtab = true;
-                        pattern = ["qml"];
-                      }
-                    ];
-                  };
-                };
-              };
-            }
-          )
+      configDir = lib.fileset.toSource {
+        root = ./.;
+        fileset = lib.fileset.unions [
+          ./icons
+          ./modules
+          ./services
+          ./styled
+          ./Config.qml
+          ./shell.qml
         ];
-
-        shellHook = ''
-          exec ${pkgs.lib.getExe' tmux "tmux"}
-        '';
       };
+    in {
+      default = lib.makeOverridable ({
+        icons ? {
+          package = pkgs.papirus-icon-theme;
+          theme = "Papirus";
+        },
+      }:
+        pkgs.symlinkJoin {
+          name = "quickshell";
+          paths = [inputs.quickshell.packages.${system}.default];
+          buildInputs = [pkgs.makeWrapper];
+          postBuild = let
+            set = "--set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/";
+            flags = "--add-flags --path --add-flags ${configDir}";
+          in ''
+            wrapProgram $out/bin/quickshell ${set} ${flags}
+            wrapProgram $out/bin/qs ${set} ${flags}
+          '';
+        });
+    });
   };
 }
