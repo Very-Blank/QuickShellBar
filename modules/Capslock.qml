@@ -24,7 +24,7 @@ Rectangle {
 
     Process {
         id: capslockInfo
-        command: ["sh", "-c", "cat /sys/class/leds/input*::capslock/brightness"]
+        command: [Config.paths.sh, "-c", `${Config.paths.cat} /sys/class/leds/input*::capslock/brightness`]
         running: true
 
         stdout: StdioCollector {

@@ -47,6 +47,13 @@ Singleton {
         property int margins
     }
 
+    component Paths: QtObject {
+        property string sh
+        property string cat
+        property string echo
+        property string brightnessctl 
+    }
+
     readonly property Palette palette: Palette {
         background: "#16161E"       // base00
         surface: "#2F3549"          // base02
@@ -81,5 +88,12 @@ Singleton {
         extraHeight: 15
         spacing: 8
         margins: 4
+    }
+
+    readonly property Paths paths: Paths {
+        property string sh: "sh"
+        property string cat: "cat"
+        property string echo: "echo"
+        property string brightnessctl: "brightnessctl"
     }
 }

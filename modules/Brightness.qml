@@ -34,7 +34,7 @@ Rectangle {
 
     Process {
         id: process
-        command: ["sh", "-c", "echo \"$(brightnessctl get) $(brightnessctl max)\""]
+        command: [Config.paths.sh, "-c", `${Config.paths.echo} \"$(${Config.paths.brightnessctl} get) $(${Config.paths.brightnessctl} max)\"`]
         running: true
 
         stdout: StdioCollector {
