@@ -44,8 +44,21 @@ Rectangle {
 
                     onClicked: mouse => {
                         const data = item.modelData;
-                        if (mouse.button === Qt.LeftButton && data.hasMenu) {
-                            data.activate();
+
+                        switch (mouse.button) {
+                        case Qt.LeftButton:
+                            if (data.onlyMenu && data.hasMenu)
+                                menuAnchor.open();
+                            else
+                                data.activate();
+                            break;
+                        case Qt.MiddleButton:
+                            data.secondaryActivate();
+                            break;
+                        case Qt.RightButton:
+                            if (data.hasMenu)
+                                menuAnchor.open();
+                            break;
                         }
                     }
                 }

@@ -5,9 +5,20 @@
     echo = "echo";
     brightnessctl = "brightnessctl";
   },
+  features ? {
+    niriWorkspaces = false;
+    audio = false;
+    brightness = false;
+    battery = false;
+  },
   fontFamily,
   palette,
-}: ''
+}: let
+  boolToStr = bool:
+    if bool
+    then "true"
+    else "false";
+in ''
   pragma Singleton
 
   import Quickshell
@@ -39,6 +50,9 @@
           property int extraHeight
           property int extraWidth
           property real radius
+      }
+      component Features: QtObject {
+          property bool niriWorkspaces
       }
       component Bar: QtObject {
           property int extraHeight
@@ -84,6 +98,12 @@
           property string cat: "${paths.cat}"
           property string echo: "${paths.echo}"
           property string brightnessctl: "${paths.brightnessctl}"
+      }
+      readonly property Features features: Features {
+          property bool niriWorkspaces: ${boolToStr features.niriWorkspaces}
+          property bool audio: ${boolToStr features.audio}
+          property bool brightness: ${boolToStr features.brightness}
+          property bool battery: ${boolToStr features.battery}
       }
   }
 ''

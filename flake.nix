@@ -37,6 +37,12 @@
           base0E = "#B48EAD";
           base0F = "#5E81AC";
         },
+        features ? {
+          niriWorkspaces = false;
+          audio = false;
+          brightness = false;
+          battery = false;
+        },
         icons ? {
           package = pkgs.papirus-icon-theme;
           theme = "Papirus";
@@ -61,6 +67,7 @@
           pkgs.runCommand "configDir" {
             config = import ./Config.nix {
               inherit palette;
+              inherit features;
 
               paths = {
                 sh = "sh";

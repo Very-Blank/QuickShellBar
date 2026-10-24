@@ -36,11 +36,20 @@ Scope {
                     bottom: parent.bottom
                     margins: Config.bar.margins
                 }
+                
+                Component {
+                    id: niriWorkspaces
 
-                NiriWorkspaces {
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.fillHeight: true
-                    window: panel.modelData.name
+                    NiriWorkspaces {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillHeight: true
+                        window: panel.modelData.name
+                    }
+                }
+
+                Loader {
+                    active: Config.features.niriWorkspaces
+                    sourceComponent: niriWorkspaces 
                 }
 
                 Power {
@@ -82,14 +91,30 @@ Scope {
                     margins: Config.bar.margins
                 }
 
-                Audio {
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.fillHeight: true
+                Component {
+                    id: audio
+                    Audio {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillHeight: true
+                    }
                 }
 
-                Brightness {
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.fillHeight: true
+                Loader {
+                    active: Config.features.audio
+                    sourceComponent: audio 
+                }
+
+                Component {
+                    id: brightness
+                    Brightness {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillHeight: true
+                    }
+                }
+
+                Loader {
+                    active: Config.features.brightness
+                    sourceComponent: brightness 
                 }
 
                 Resources {
@@ -97,9 +122,17 @@ Scope {
                     Layout.fillHeight: true
                 }
 
-                Battery {
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.fillHeight: true
+                Component {
+                    id: battery
+                    Battery {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillHeight: true
+                    }
+                }
+
+                Loader {
+                    active: Config.features.battery
+                    sourceComponent: battery
                 }
 
                 SystemTray {

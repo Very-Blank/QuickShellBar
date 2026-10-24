@@ -54,6 +54,13 @@ Singleton {
         property string brightnessctl 
     }
 
+    component Features: QtObject {
+        property bool niriWorkspaces
+        property bool audio
+        property bool brightness
+        property bool battery
+    }
+
     readonly property Palette palette: Palette {
         background: "#16161E"       // base00
         surface: "#2F3549"          // base02
@@ -95,5 +102,12 @@ Singleton {
         property string cat: "cat"
         property string echo: "echo"
         property string brightnessctl: "brightnessctl"
+    }
+
+    readonly property Features features: Features {
+        property bool niriWorkspaces: false
+        property bool audio: false
+        property bool brightness: false
+        property bool battery: false
     }
 }
