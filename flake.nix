@@ -38,8 +38,8 @@
           base0F = "#5E81AC";
         },
         features ? {
-          niriWorkspaces = false;
-          audio = false;
+          niriWorkspaces = true;
+          audio = true;
           brightness = false;
           battery = false;
         },
@@ -74,6 +74,7 @@
                 cat = "cat";
                 echo = "echo";
                 brightnessctl = "${lib.getExe pkgs.brightnessctl}";
+                pavucontrol = "${lib.getExe pkgs.pavucontrol}";
               };
 
               fontFamily = font.family;
@@ -86,22 +87,18 @@
             cp -r ${sourceDir}/. $out/
           '';
 
-        fontConfig = pkgs.writeText "fonts.conf" ''
-          <?xml version='1.0'?>
-          <!DOCTYPE fontconfig SYSTEM 'urn:fontconfig:fonts.dtd'>
-          <fontconfig>
-            <dir>${font.package}</dir>
-            <cachedir>/var/cache/fontconfig</cachedir>
-            <cachedir prefix="xdg">fontconfig</cachedir>
-          </fontconfig>
-        '';
+        fontsConf = pkgs.makeFontsConf {
+          fontDirectories = [
+            font.package
+          ];
+        };
       in
         pkgs.symlinkJoin {
           name = "quickshell";
           paths = [inputs.quickshell.packages.${system}.default];
           buildInputs = [pkgs.makeWrapper];
           postBuild = let
-            set = "--set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/ --set FONTCONFIG_FILE ${fontConfig}";
+            set = "--set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/ --set FONTCONFIG_FILE ${fontsConf}";
             flags = "--add-flags --path --add-flags ${configDir}";
           in ''
             wrapProgram $out/bin/quickshell ${set} ${flags}

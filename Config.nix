@@ -4,6 +4,7 @@
     cat = "cat";
     echo = "echo";
     brightnessctl = "brightnessctl";
+    pavucontrol = "pavucontrol";
   },
   features ? {
     niriWorkspaces = false;
@@ -64,6 +65,7 @@ in ''
           property string cat
           property string echo
           property string brightnessctl
+          property string pavucontrol
       }
       readonly property Palette palette: Palette {
           background: "${palette.base00}"
@@ -98,6 +100,7 @@ in ''
           property string cat: "${paths.cat}"
           property string echo: "${paths.echo}"
           property string brightnessctl: "${paths.brightnessctl}"
+          property string pavucontrol: "${paths.pavucontrol}"
       }
       readonly property Features features: Features {
           property bool niriWorkspaces: ${boolToStr features.niriWorkspaces}

@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
 
+import Quickshell
 import Quickshell.Services.Pipewire
 import QtQuick.Layouts
 import QtQuick.Effects
@@ -68,6 +69,13 @@ Rectangle {
                 text: source.volume + "%"
             }
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+
+        onClicked: Quickshell.execDetached([Config.paths.pavucontrol])
     }
 
     PwObjectTracker {

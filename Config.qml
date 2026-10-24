@@ -52,6 +52,7 @@ Singleton {
         property string cat
         property string echo
         property string brightnessctl 
+        property string pavucontrol
     }
 
     component Features: QtObject {
@@ -102,6 +103,7 @@ Singleton {
         property string cat: "cat"
         property string echo: "echo"
         property string brightnessctl: "brightnessctl"
+        property string pavucontrol: "pavucontrol"
     }
 
     readonly property Features features: Features {

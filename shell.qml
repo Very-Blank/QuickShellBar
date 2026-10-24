@@ -41,14 +41,17 @@ Scope {
                     id: niriWorkspaces
 
                     NiriWorkspaces {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.fillHeight: true
+                        height: parent.height
                         window: panel.modelData.name
                     }
                 }
 
                 Loader {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+
                     active: Config.features.niriWorkspaces
+                    visible: active
                     sourceComponent: niriWorkspaces 
                 }
 
@@ -94,26 +97,32 @@ Scope {
                 Component {
                     id: audio
                     Audio {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.fillHeight: true
+                        height: parent.height
                     }
                 }
 
                 Loader {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+
                     active: Config.features.audio
+                    visible: active
                     sourceComponent: audio 
                 }
 
                 Component {
                     id: brightness
                     Brightness {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.fillHeight: true
+                        height: parent.height
                     }
                 }
 
                 Loader {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+
                     active: Config.features.brightness
+                    visible: active
                     sourceComponent: brightness 
                 }
 
@@ -125,13 +134,16 @@ Scope {
                 Component {
                     id: battery
                     Battery {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.fillHeight: true
+                        height: parent.height
                     }
                 }
 
                 Loader {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.fillHeight: true
+
                     active: Config.features.battery
+                    visible: active
                     sourceComponent: battery
                 }
 
