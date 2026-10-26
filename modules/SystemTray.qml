@@ -1,8 +1,9 @@
 pragma ComponentBehavior: Bound
 
-import QtQuick
-import QtQuick.Layouts
+import Quickshell
 import Quickshell.Services.SystemTray
+import QtQuick.Layouts
+import QtQuick
 
 import qs
 
@@ -37,6 +38,12 @@ Rectangle {
                     sourceSize: Qt.size(width, height)
                     antialiasing: true
                 }
+
+				QsMenuAnchor {
+					id: menuAnchor
+					anchor.item: parent
+					menu: modelData.menu
+				}
 
                 MouseArea {
                     anchors.fill: parent
