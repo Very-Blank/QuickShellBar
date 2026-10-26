@@ -51,6 +51,7 @@
           package = pkgs.nerd-fonts.jetbrains-mono;
           family = "JetBrainsMono Nerd Font Mono";
         },
+        platformTheme ? "gtk3",
       }: let
         sourceDir = lib.fileset.toSource {
           root = ./.;
@@ -98,11 +99,28 @@
           paths = [inputs.quickshell.packages.${system}.default];
           buildInputs = [pkgs.makeWrapper];
           postBuild = let
-            set = "--set QS_ICON_THEME ${icons.theme} --prefix XDG_DATA_DIRS : ${icons.package}/share/ --set FONTCONFIG_FILE ${fontsConf}";
-            flags = "--add-flags --path --add-flags ${configDir}";
+            set = lib.strings.concatStringsSep " " (map (x: "--set ${x}") [
+              "QS_ICON_THEME ${icons.theme}"
+              "FONTCONFIG_FILE ${fontsConf}"
+              "QT_QPA_PLATFORMTHEME ${platformTheme}"
+            ]);
+
+            prefix = lib.strings.concatStringsSep " " (
+              map (x: "--prefix ${x}") [
+                "XDG_DATA_DIRS : ${icons.package}/share/"
+              ]
+            );
+
+            flags = lib.strings.concatStringsSep " " (
+              map (x: "--add-flags ${x}")
+              [
+                "\"--path ${configDir}\""
+              ]
+            );
           in ''
-            wrapProgram $out/bin/quickshell ${set} ${flags}
-            wrapProgram $out/bin/qs ${set} ${flags}
+            echo "${lib.strings.escapeShellArg set} ${lib.strings.escapeShellArg prefix} ${lib.strings.escapeShellArg flags}"
+            wrapProgram $out/bin/quickshell ${set} ${prefix} ${flags}
+            wrapProgram $out/bin/qs ${set} ${prefix} ${flags}
           '';
 
           meta = {
